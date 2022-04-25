@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="report">
+	<!-- 해당 아이디(u_id)로 신고한적(re_id)가 있는지 검사 - 있으면1 없으면 0
+	 -->
+	<select id="selectCheck" parameterType="Report" resultType="int">
+		select count(*) from report where u_id=#{u_id} and b_id=#{b_id}
+	</select>
+	<!-- 없다면 신고처리 -->
+	<insert id="insertReport" parameterType="Report">
+		insert into report(b_id,u_id,u_name,re_reason)
+		values(#{b_id},#{u_id},#{u_name},#{re_reason})
+	</insert>
+	<!-- 신고된 게시물 신고수증가 -->
+	<update id="updateReportCount" parameterType="Report">
+	update board set b_warning=b_warning+1 where b_id=#{b_id}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,190 @@
+html{
+    font-size: 10px;
+}
+body{
+	color:var(--color-text-color);
+    background-color: var(--color-bg-body);
+}
+.channelList-article .container{
+    
+    min-height: 800px;
+    background-color: var(--color-bg-main);
+    padding-bottom: 1rem;
+    border: 1px solid var(--color-border-color);
+    margin-bottom:1.5rem;
+}
+.channelList-article .channel-form{
+	 display: flex;
+    padding: 2rem 0;
+    margin: 0 auto;
+}
+.channelList-article .channel-form button{
+	width:10rem;
+
+}
+.channelList-article .channel-form .form-control{
+   color: var(--color-text-color);
+   background-color: var(--color-bg-main);
+   width: calc(100% - 10rem);
+   font-size: 1.8rem;
+   border: 1px solid var(--color-border-color);
+}
+/* 채널박스  */
+.channelList-article .header-info{
+    font-size: 1.3rem;
+}
+.channelList-article .flex-header {
+   display: flex;
+  justify-content: space-between;
+  }
+.channelList-article .header-title {
+    font-size: 1.3rem;
+   	padding:0.5rem 0;
+  }
+
+.channelList-article .ch-box{
+  	padding-bottom:0.5rem;
+  /*   border-top: 1px solid var(--color-border-color); */
+    border-top: 1px solid #2F4058;
+   /*  border-bottom: 1px solid var(--color-border-color); */
+    border-bottom: 1px solid #2F4058;
+    margin: 1rem;
+
+}
+.channelList-article .ch-box-category{
+	 /* background-color:var(--color-bg-1); */
+	 background-color:#2F4058;
+	font-size:1.5rem;
+	margin-bottom:0.5rem;
+	/* border-bottom: 1px solid var(--color-border-color); */
+	border-bottom: 1px solid #2F4058;
+}
+/* .channelList-article .ch-content-box {
+	display: flex;
+	word-wrap: wrap;
+	justify-content: space-between;
+	vertical-align: middle;
+	}  */
+.channelList-article .header-title a{
+	color:var(--color-text-color);
+	
+}
+.channelList-article button {
+  background: var(--color-bg-navbar);
+  color: #fff;
+  border: none;
+  position: relative;
+
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+}
+.channelList-article button:hover {
+  background: #fff;
+  color: black;
+}
+.channelList-article button:before,
+.channelList-article button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #000000;
+  transition: 400ms ease all;
+}
+.channelList-article button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.channelList-article button:hover:before,
+.channelList-article button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+
+.article-creation .container{
+    min-height: 850px;
+}
+
+.article-creation .creation-box{
+    font-style: bold;
+    margin: 2rem 0;
+}
+
+
+.article-creation .font-style{
+   
+    padding:0.5rem;
+}
+.article-creation .font-style:hover{
+    transition: 2s;
+    background-color: white;
+    color:#E96874;
+    border-radius: 1rem;
+   
+}
+
+
+
+
+/*  */
+.article-creation a{
+	background: #3d414d;
+	color: #fff;
+	border: none;
+	position: relative;
+	padding: 0.5rem;
+	font-size: 2rem;
+	cursor: pointer;
+	transition: 800ms ease all;
+	outline: none;
+}
+
+.article-creation a:hover {
+	text-decoration: none;
+	background: rgb(197, 188, 188);
+	color: black;
+}
+
+.article-creation a:before,.article-creation a:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 2px;
+	width: 0;
+	background: #000000;
+	transition: 400ms ease all;
+}
+
+.article-creation a:after {
+	right: inherit;
+	top: inherit;
+	left: 0;
+	bottom: 0;
+}
+
+.article-creation a:hover:before,.article-creation a:hover:after {
+	width: 100%;
+	transition: 800ms ease all;
+}
+
+/* .article-creation .mychannelGo {
+	margin: 5rem 0;
+} */
+
+@media screen and (min-width:596px) {
+    
+ }
+
+@media screen and (max-width:320px) {
+	.article-creation .mycard {
+		width: 100%;
+	}
+}

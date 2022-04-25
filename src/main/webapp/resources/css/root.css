@@ -1,0 +1,37 @@
+:root {
+  --color-bg-body: #eee;
+
+  --color-bg-main: white;
+
+  --color-bg-hover: black;
+
+  --color-border-color: #bbb;
+
+  --color-text-color: black;
+
+  --color-bg-badge: #555555;
+  --color-bg-1:#f2f7f9;
+  
+  --color-text-badge-color: white;
+  --color-bg-focus: #eee;
+
+  /* main-board-title */
+  --color-title-border-color: rgb(37, 110, 104);
+  --color-title-text-color: #3d414d;
+  /* btn */
+  --color-btn-text-color: white;
+  --color-btn-bg-color: #3d414d;
+  --color-btn-border-color: black;
+  /* footer */
+  --color-footer-text-color:rgb(37, 110, 104);
+  --color-control-color:white;
+  /* navbar */
+  --color-bg-navbar:#3d414d;
+  --color-navbar-font:white;
+  --color-bg-dropdown:#3d414d;
+  --color-bg-tag:#eee;
+
+  /* form */
+  --color-form-text:white;
+  --color-bg-form:#eee;
+}

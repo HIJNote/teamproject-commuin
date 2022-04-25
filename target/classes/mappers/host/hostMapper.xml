@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.commuin.persistence.HostDao">
+	<!-- 이모티콘 판매 정보 -->
+	<select id="emoticonInfo" resultType="com.commuin.vo.Emoticon">
+		select e_title, e_count, e_delete, e_path from emoticon order by e_count desc limit 10
+	</select>
+	<!-- 일별 방문자 조회  -->
+	<select id="dayInfo" resultType="com.commuin.vo.Chart">
+		select count(*) 'dayCount', date_format(dayDate, '%d') 'dayList', date_format(dayDate, '%m') 'month' 
+          from dayVisit 
+        group by dayList
+        having month = #{month}
+        order by dayList asc
+	</select>
+	<!-- 회원 가입 수, 오늘 가입 수 조회  -->
+	<select id="joinInfo" resultType="com.commuin.vo.User">
+		select *, 
+		   	     (select count(*) 
+			        from user 
+			        where date_format(u_joindate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d')) u_TodayJoinCnt,
+		         (select count(*) 
+			       from user) u_accumulateJoinCnt
+          from user where date_format(u_joindate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d')
+	</select>
+	<!-- 오늘 등록된 게시글, 오늘 등록된 게시글 수, 누적 게시글 수 조회  -->
+	<select id="boardInfo" resultType="com.commuin.vo.Board">
+		select *, 
+				 (select count(*) 
+					from board
+					where date_format(b_regdate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d')) b_TodayboardCnt,
+				 (select count(*) 
+				   from board) b_accumulateboardCnt
+		  from board where date_format(b_regdate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d') and b_delete != 1
+	</select>
+		<!-- 오늘 등록된 문의 글, 으늘 등록된 문의 글 수, 누적 문의 글 수  -->
+	<select id="boardQuestionInfo" resultType="com.commuin.vo.Board">
+		select *, 
+			 (select count(*) 
+				from board
+			   where date_format(b_regdate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d') and (ch_name = '문의 게시판')) b_Today_Q_Cnt,
+			 (select count(*) 
+			    from board
+			   where (ch_name = '문의 게시판')) b_Accumulate_Q_Cnt
+		from board where date_format(b_regdate, '%y-%m-%d') = date_format(Now(), '%y-%m-%d') and (ch_name = '문의 게시판')
+	</select>
+	<!-- 회원 상위 1 ~ 5명 조회 -->
+	<select id="userRank" resultType="com.commuin.vo.User">
+		select u_name, u_lv, u_ex from user order by u_lv desc limit 5
+	</select>
+	<!-- 회원 전체 리스트 -->
+	<select id="userAllList" resultType="com.commuin.vo.User">
+		select * from user
+	</select>
+	<!-- 회원 수 -->
+	<select id="userCnt" resultType="com.commuin.vo.User">
+		select 
+	           (select COUNT(*) from user) as 'allCnt',
+	           (select COUNT(CASE WHEN TIMESTAMPDIFF(DAY, u_lastdate, curdate()) > 30 AND u_state = 1 THEN 1 END) from user) AS 'oldCnt',
+               (select COUNT(CASE WHEN u_state = 2 THEN 1 END) from user) AS 'stopCnt',               
+               (select COUNT(CASE WHEN u_state = 3 THEN 1 END) from user) AS 'removeCnt',
+               (select COUNT(CASE WHEN u_state = 4 THEN 1 END) from user) AS 'blackCnt'
+          from user
+	</select>
+	<!-- 회원 휴면 리스트 -->
+	<select id="userOldList" resultType="com.commuin.vo.User">
+		select  u_name, TIMESTAMPDIFF(DAY, u_lastdate, curdate()) 'u_pt', u_state
+		  from user
+		  Having u_pt >= 30 and u_state = 1
+		order by u_pt ASC
+	</select>
+	<!-- 상태 : 휴면 -> 정상 변경 -->
+	<update id="userNormal">
+		update user set u_state = 0 WHERE u_name=#{u_name}
+	</update>
+	<!-- 상태 : 정상 -> 정지 변경 -->
+	<update id="userStop">
+		update user set u_state = 2 WHERE u_name=#{u_name}
+	</update>
+	<!-- 회원 정보 조회 -->
+	<select id="userInfo" resultType="com.commuin.vo.User">
+		select * from user where u_name = #{u_name}
+	</select>
+	<!-- 전체 게시글 조회 -->
+	<select id="boardAllList" resultType="com.commuin.vo.Board">
+		select *, 
+		  (select count(*) from board where (ch_name != '공지 사항' and ch_name != '문의 게시판') and b_delete != 1) b_Today_Q_Cnt
+		 from board where (ch_name != '공지 사항' and ch_name != '문의 게시판') and b_delete != 1 order by b_regdate desc 
+	</select>
+	<!-- 전체 공지글 조회 -->
+	<select id="b_Announcement_List" resultType="com.commuin.vo.Board">
+		select *, 
+			  (select count(*) from board where ch_name = '공지 사항') b_Today_Q_Cnt
+		  from board where ch_name = '공지 사항' order by b_delete asc;
+	</select>
+	<!-- 문의 게시글 조회 -->
+	<select id="b_Question_List" resultType="com.commuin.vo.Board">
+		select *, 
+			  (select count(*) from board where ch_name = '문의 게시판') b_Today_Q_Cnt
+		  from board where (ch_name = '문의 게시판') and b_delete != 1 order by b_regdate desc
+	</select>
+	<!-- 블라인드 게시글 조회 -->
+	<select id="b_Delete_List" resultType="com.commuin.vo.Board">
+		select *, 
+			  (select count(*) from board where  (ch_name != '문의 게시판' and ch_name != '공지 사항') and b_delete = 1) b_Today_Q_Cnt
+		  from board where (ch_name != '문의 게시판' and ch_name != '공지 사항') and b_delete = 1 order by b_regdate desc
+	</select>
+	<!-- 신고 게시글 -> 일반 게시글 변경 -->
+	<update id="board_D_Change" parameterType="com.commuin.vo.Board">
+		update board set b_delete = 0, b_warning = 0, b_blinddate=#{b_blinddate} WHERE b_id = #{b_id}
+	</update>
+	<!-- 일반 게시글 -> 신고 게시글 변경 -->
+	<update id="board_R_Change" parameterType="com.commuin.vo.Board">
+		update board set b_delete = 1, b_blinddate=#{b_blinddate} WHERE b_id = #{b_id}
+	</update>
+	<!-- 공지글 작성 -->
+	<insert id="adminBoardInsert" parameterType="com.commuin.vo.Board">
+		insert into board(b_title, ch_name, u_name, b_content)
+		values(#{b_title},#{ch_name},#{u_name},#{b_content})
+	</insert>
+	<!-- 게시글 정보 조회 -->
+	<select id="board_Info" resultType="com.commuin.vo.Board">
+		select * from board where b_id = #{b_id}
+	</select>
+	<!-- 댓글 정보 조회 -->
+	<select id="reply_Info" resultType="com.commuin.vo.Reply">
+		select * from Reply where b_id = #{b_id}
+	</select>
+	<insert id="replyInsert" parameterType="com.commuin.vo.Reply">
+		insert into reply(b_id, rp_content, u_name, rp_type) 
+        values(#{b_id}, #{rp_content}, #{u_name}, #{rp_type})
+	</insert>
+	<update id="board_Reply_Count_Update" parameterType="com.commuin.vo.Reply">
+		update board set b_reply_count = b_reply_count + 1 where b_id = #{b_id}  
+	</update>
+	<!-- 게시글 정보 조회 -->
+	<select id="reply_Count" resultType="int">
+		select b_reply_count from board where b_id = #{b_id}
+	</select>
+	
+	<!-- 추가 -->
+	<!-- 댓글 추가시 포인트 업 -->
+	<update id="replyBoardPoint" parameterType="String">
+		update user set u_pt = u_pt + 100 where u_name = #{u_name}
+	</update>
+	
+	<!-- 댓글 작성시 삭제를 위한 댓글의 id값 반환 중복된 댓글 내용시 최근 댓글 id 반환 -->
+	<select id="replyId" resultType="int">
+		select rp_id 
+		from reply 
+		where b_id = #{b_id} and rp_content = #{rp_content} and u_name = #{u_name} and 
+		rp_regdate = (select max(rp_regdate) from reply where b_id = #{b_id} and rp_content = #{rp_content} and u_name = #{u_name})
+	</select>
+	
+	<!-- 댓글 삭제 -->
+	<update id="replyDelete">
+		update reply set rp_delete = 1 where rp_id = #{rp_id}
+	</update>
+	
+	<!-- board reply count 다운 -->
+	<update id="boardReplyCountDown" parameterType="com.commuin.vo.Reply">
+		update board set b_reply_count = b_reply_count - 1 where b_id = (select b_id from reply where rp_id = #{rp_id})
+	</update>
+	
+		<!-- 채널 정보 조회 -->
+	<select id="adminChannelList" resultType="com.commuin.vo.Channel">
+		select * from Channel order by ch_grade desc
+	</select>
+	<!-- num : 1일 경우, 채널 일반 -> 메인 승급 -->
+	<!-- num : 0일 경우, 채널 메인 -> 일반 하락 -->
+	<update id="channelChange" parameterType="com.commuin.vo.Channel">
+		update channel 
+			<trim prefix="SET" suffixOverrides=",">
+				<if test="ch_grade == 1">ch_grade = 1,</if>
+				<if test="ch_grade == 0">ch_grade = 0,</if>
+			</trim>
+		where ch_id = #{ch_id}  
+	</update>
+</mapper>

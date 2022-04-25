@@ -1,0 +1,47 @@
+body { background-color:#f1f3f5; }
+
+a{ color:gray; }
+
+a:hover{ text-decoration: none; }
+
+input:hover { cursor:auto; }
+
+label:hover { cursor:default; }
+
+form.myForm { padding-top: 50px; padding-bottom: 20px; border:solid 1px #dee2e6; border-radius: 10px; }
+
+.container-h { background-color:white; min-height: 100vh; }
+
+.myRs input[type=radio]:hover + label {
+    padding: 5px;
+    color:black;
+    border:solid 1px #00A495;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.myRs input[type=radio]{
+    display:none;
+}
+
+.myRs input[type=radio]:checked + label {
+    padding: 5px;
+    border:solid 1px #00A495;
+    border-radius: 25px;
+    background-color: #00A495;
+    color:white;
+}
+
+textarea {
+    resize:none;
+}
+
+@media (min-width: 0px) { * { font-size:10px; } input[type=text], input[type=password] { font-size:20px; } .myRs input[type=text] { font-size:16px; } }
+
+@media (min-width: 300px) { * {  font-size:12px; } }
+
+@media (min-width: 576px) { * { font-size:16px; } div p.create-mf { font-size:60%; } }
+
+@media (min-width: 768px) { div p.create-mf { font-size:80%; } }
+
+@media (min-width: 992px) { * , div p.create-mf { font-size:16px; } }

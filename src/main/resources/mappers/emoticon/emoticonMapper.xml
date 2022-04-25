@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="EmoticonDao">
+	<resultMap type="Emoticon" id="emoticonResult">
+		<id property="e_id" column="e_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="e_title" column="e_title" />
+		<result property="e_thumbnail" column="e_thumbnail" />
+		<result property="e_path" column="e_path" />
+		<result property="e_count" column="e_count" />
+		<result property="e_price" column="e_price" />
+		<result property="e_regdate" column="e_regdate" />
+	</resultMap>
+
+	<resultMap type="EmoticonList" id="emoticonListResult">
+		<id property="el_id" column="el_id"></id>
+		<result property="e_id" column="e_id" />
+		<result property="el_name" column="el_name" />
+		<result property="el_path" column="el_path" />
+	</resultMap>
+
+	<resultMap type="UserEmoticon" id="userEmoticonResult">
+		<id property="ue_id" column="ue_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="e_id" column="e_id" />
+		<collection property="emoticon" resultMap="emoticonResult"></collection>
+	</resultMap>
+
+
+
+
+	<insert id="uploadEmoticon" parameterType="Emoticon">
+	<![CDATA[
+	 insert into emoticon(u_name,e_title,e_thumbnail,e_path) values(#{u_name},#{e_title},#{e_thumbnail},#{e_path})
+	]]>
+	</insert>
+	<select id="getEmoticonId" parameterType="Emoticon"
+		resultType="int">
+	<![CDATA[
+	 select e_id from emoticon where e_thumbnail=#{e_thumbnail}
+	]]>
+	</select>
+	<select id="uploadEmoticonList" parameterType="EmoticonList">
+	<![CDATA[
+		insert into emoticon_list(e_id,el_name,el_path) values(#{e_id},#{el_name},#{el_path})
+	]]>
+	</select>
+
+	<!-- 이모티콘리스트 -->
+	<select id="getEmoticonList" parameterType="Emoticon"
+		resultMap="emoticonResult">
+	<![CDATA[
+		select * from emoticon where 1=1
+	]]>
+
+		<if test="searchCondition=='title'">
+			and e_title like CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<if test="searchCondition=='uploader'">
+			and u_name like CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<![CDATA[
+		order by
+		]]>
+		<choose>
+			<when test="target=='rank'">
+				e_count desc
+			</when>
+			<otherwise>
+				e_id desc
+			</otherwise>
+		</choose>
+
+		LIMIT #{pageMaker.pageStart}, #{pageMaker.perPageNum}
+
+	</select>
+	<!-- 이모티콘 수 -->
+	<select id="selectCount" parameterType="Emoticon"
+		resultType="int">
+	<![CDATA[
+		select count(*) from emoticon where 1=1
+	]]>
+		<choose>
+			<when test="searchCondition=='title'">
+				and e_title like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='uploader'">
+				and u_name like CONCAT('%',#{searchKeyword},'%')
+			</when>
+		</choose>
+	</select>
+
+	<select id="getSeletedEmoticonList" parameterType="Emoticon"
+		resultMap="emoticonListResult">
+	<![CDATA[
+		select * from emoticon_list where e_id=#{e_id}
+	]]>
+	</select>
+	<select id="getSeletedEmoticonInfo" parameterType="Emoticon"
+		resultMap="emoticonResult">
+	<![CDATA[
+		select * from emoticon where e_id=#{e_id}
+	]]>
+	</select>
+
+	<select id="purchaseCheck" parameterType="UserEmoticon"
+		resultType="int">
+	<![CDATA[
+		select count(*) from user_emoticon where e_id=#{e_id} and u_name=#{u_name}
+	]]>
+	</select>
+
+	<insert id="purchaseEmoticon" parameterType="UserEmoticon">
+	<![CDATA[
+		insert into user_emoticon(u_name,e_id) values(#{u_name},#{e_id})
+	]]>
+	</insert>
+	<update id="updateCount" parameterType="Emoticon">
+	<![CDATA[
+		update emoticon set e_count=e_count+1 where e_id=#{e_id}
+	]]>
+	</update>
+
+
+	<insert id="deleteEmoticon" parameterType="UserEmoticon">
+	<![CDATA[
+		delete from user_emoticon where e_id=#{e_id} and u_name=#{u_name};
+	]]>
+	</insert>
+	<!-- 유저이름으로 해당 유저가 구매한 이모티콘 id를 구함 -->
+	<select id="selectUserEmoticon" parameterType="UserEmoticon"
+		resultMap="userEmoticonResult">
+		select * from user_emoticon where u_name=#{u_name}
+	</select>
+	<!-- 해당 유저가구매한 이모티콘의 정보들을 가져옴. -->
+	<select id="selectEmoticonList" parameterType="UserEmoticon"
+		resultMap="userEmoticonResult">
+	<![CDATA[
+	select * from user_emoticon ue join emoticon e on ue.e_id=e.e_id where ue.u_name=#{u_name} 
+	]]>
+	</select>
+	<!--업로더 전 같은 이름의 title을 가지는 이모티콘이 있는가 체크 -->
+	<select id="checkTitle" parameterType="Emoticon"
+		resultType="int">
+		select count(*) from emoticon where e_title=#{e_title}
+		limit 1
+	</select>
+
+</mapper>

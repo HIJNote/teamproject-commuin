@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+[ ]
+[ ]
+[ ]
+[  ]
+-->
+
+<!--  
+property : 변수명 ex) Board board에서 property는 board
+id : mybatis에서 고유한 아이디
+type : 반환 타입
+조인문에서 Collection은 1:N association은 1:1에서 사용하는듯?
+parameterType은 ~~~.BoardVO처럼 완전히 다 써야하지만 mybatis config를 따로 설정해서
+alias를 가져올 수 있음, 이때 alias는 변수명, type은 타입? 정도로 생각하자
+Board board 에서 Board가 type, board가 alias 
+-->
+
+<mapper namespace="main" >
+
+	<resultMap type="Board" id="boardResult">
+	<id property="b_id" column="b_id"></id>
+	<result property="ch_name" column="ch_name" />
+	<result property="ch_id" column="ch_id" />
+	<result property="b_title" column="b_title" />
+	<result property="u_name" column="u_name" />
+	<result property="b_reply_count" column="b_reply_count" />	
+	<result property="b_regdate" column="b_regdate" />
+	</resultMap>
+	
+	<resultMap type="Channel" id="channelResult">
+	<id property="ch_id" column="ch_id"></id>
+	<result property="ch_name" column="ch_name" />
+	<result property="u_name" column="u_name" />
+	<result property="ch_grade" column="ch_grade" />
+	<result property="ch_intro" column="ch_intro" />	
+	<result property="ch_subscribe" column="ch_subscribe" />
+	</resultMap>
+	<!-- 메인채널에 표시할 등급의 채널 목록  -->
+	 <select id="selectChannelList" resultMap="channelResult">
+	<![CDATA[
+	select * from channel where ch_grade=1 
+	limit 10
+	]]>
+	</select>
+	<!-- 메인채널에 표시할 베스트 게시글 채널  -->
+	 <select id="selectBestChannel" resultMap="channelResult">
+	<![CDATA[
+	select * from channel where ch_grade=2 
+	]]>
+	</select>
+	
+	<!-- 메인채널에 표시할 채널의 게시글 목록 -->
+	<select id="selectBoardList" parameterType="Board" resultMap="boardResult">
+	<![CDATA[
+	select b_id, b_title, b_regdate,b_reply_count from board 
+	where ch_name=#{ch_name} and b_delete = 0
+	order by b_regdate desc
+	limit 10;
+	]]>
+	</select>
+	
+	<!-- 메인채널에 베스트 게시글 채널의 게시글 목록 -->
+	<select id="selectBestList" parameterType="Board" resultMap="boardResult">
+	<![CDATA[
+	select b_id, b_title, b_regdate,b_reply_count from board 
+	where b_view>20 and b_delete = 0 and ch_id in (select ch_id from channel where ch_grade !=4)
+	order by b_regdate desc
+	limit 10;
+	]]>
+	</select>
+	
+	<select id="channelList" resultType="com.commuin.vo.Channel">
+		select * from channel order by ch_name ASC
+	</select>
+	
+	
+	
+</mapper>

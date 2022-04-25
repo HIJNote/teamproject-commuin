@@ -1,0 +1,70 @@
+html{
+    font-size: 10px;
+}
+body{
+    background-color: var(--color-bg-body);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+.emoticon-upload-article .container{
+    padding: 0;
+    min-height: 900px;
+    background-color: var(--color-bg-main);
+    
+    border:1px solid var(--color-border-color);
+    border-top: none;
+}
+.upload-container{
+    padding-top: 0.5rem;
+    margin:  auto;
+    max-width: 90%;
+    
+}
+.upload-title{
+    margin: 2rem 0;
+    color: var(--color-text-color);
+    font-size: 2.5rem;
+   
+}
+.upload-title span{
+    padding-bottom: 0.5rem;
+    border-bottom:2px solid rgb(95, 129, 141);
+}
+.emoticon-upload-article .card{
+    border: 1px solid var(--color-border-color);
+    padding: 0.5rem;
+    font-size: 1.5rem;
+    color: white;
+ 	 background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%);
+    
+}
+.upload-btn .btn-secondary{
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
+    background-color: transparent;
+    border: 1px solid var(--color-border-color);
+}
+.emoticon-upload-article img{
+    width:100px;
+    height: 100px;
+}
+.emoticon-upload-article .form-control{
+    font-size: 1.2rem;
+}
+@media screen and (max-width:767px) {
+    .upload-container{
+        max-width: 100%;
+        
+    }
+    .emoticon-upload-article .card{
+       vertical-align: middle;
+        font-size: 1.2rem;
+    }
+    
+}
+@media screen and (max-width:320px) {
+    .emoticon-upload-article img{
+        width: 90px;
+        height: 90px;
+    }
+    
+}

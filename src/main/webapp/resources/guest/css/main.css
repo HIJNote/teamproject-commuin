@@ -1,0 +1,295 @@
+body {
+  background-color: black;
+  color:yellow;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+}
+
+.nav-font {
+  color: rgb(228, 215, 215);
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.nav-font:hover {
+  color: sandybrown;
+}
+
+.title-boxline {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  border-style: none;
+  border-bottom-color: rgb(37, 110, 104);
+  border-bottom-style: solid;
+  border-bottom-width: 0.15em;
+  padding-bottom: 5px;
+ 
+}
+
+
+.drop-font {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+  Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  font-size: 15px;
+}
+.a-card-font {
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 0.9em;
+  
+}
+a:hover {
+  color: transparent;
+}
+.a-hover:hover{
+  color:white;
+
+}
+
+
+/* 부트스트랩 수정 */
+/* 부트스트랩 수정 */
+/* 부트스트랩 수정 */
+/* 부트스트랩 수정 */
+/* 부트스트랩 수정 */
+
+/* 카드 
+
+
+*/
+.card {
+  background-color: #222222;
+ 
+  border-radius: 0px;
+  border-color: transparent;
+}
+.card-text {
+  color: white;
+  font-size: 0.87em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+}
+.boxline {
+  border-bottom: 0.01em solid #555555;
+ 
+  min-height: 300px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  /* padding-left: 5px;
+  padding-right: 5px; */
+}
+
+/* 드롭다운 
+
+
+*/
+.dropdown-menu {
+  position: absolute;
+  background-color: #222222;
+  color: white;
+  border: 0.02em solid #555555;
+}
+.float-left:hover {
+  text-decoration: underline;
+}
+.dropdown-item {
+  color: white;
+  font-size: 0.9em;
+  font-family: "Nanum Gothic", sans-serif;
+  font-weight: 700;
+}
+.dropdown-divider {
+  border-top-color: #555555;
+}
+
+.dropdown-item:focus,
+.dropdown-item:hover {
+  color: white;
+  text-decoration: none;
+  background-color: #444444;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+  color: #fff;
+  text-decoration: none;
+  background-color: steelblue;
+}
+
+.item-disabled:hover {
+
+  background-color: transparent;
+}
+
+/* 버튼 
+
+
+*/
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary.focus,
+.btn-primary:focus {
+  font-size: 1.1em;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: #e2e2e2;
+  background-color: transparent;
+  border-color: #e2e2e2;
+}
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: transparent;
+  border-color: #e2e2e2;
+}
+
+
+/* 뱃지 
+
+
+*/
+.badge {
+  
+  color: white;
+  font-family: monospace;
+  font-weight: lighter;
+  font-size: 10.95px;
+}
+.badge-primary {
+  background-color: #555555;
+}
+/* 네브바 배경 
+
+
+*/
+.bg-primary {
+  background-color: #222222 !important;
+}
+
+.navbar {
+  border-top: 0.01em solid #555555;
+  border-bottom: 0.01em solid #555555;
+  border-collapse: collapse;
+  padding: 0.2em 1em;
+}
+.navbar-brand {
+  color: rgb(164, 174, 204) !important;
+  font-family: "Bungee Outline", cursive;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.nav-link {
+  color: white !important;
+}
+/* 수직바
+
+
+*/
+.vertical-bar {
+  display: inline-block;
+  align-self: stretch;
+  width: 1px;
+  min-height: 1em;
+  background-color: currentColor;
+  opacity: 0.25;
+
+  background-color: thistle;
+}
+
+/* 컨테이너 */
+.container {
+  max-width: 1000px;
+  border-collapse: collapse;
+}
+.main-container {
+  border-left: 0.01em solid #555555;
+  border-right: 0.01em solid #555555;
+  border-bottom: 0.01em solid #555555;
+  border-collapse: collapse;
+  padding: 2em;
+  background-color: #222222;
+}
+
+
+/* 배너 */
+.square {
+  position: relative;
+  width: 100%;
+}
+
+.square:after {
+  content: "";
+  display: block;
+  padding-bottom: 20%;
+}
+
+.content {
+  position: absolute;
+  margin: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.img-box {
+  margin:0 auto;
+  margin-bottom: 2em;
+  background-color: blue;
+  width: 100%;
+  max-height: 200px;
+}
+
+img {
+display: block;
+width: 100%;
+height: auto;
+
+}
+
+/* 푸터 */
+.container-fluid{
+margin-top: 1.5em;
+background-color: rgb(34, 33, 33);
+border-top: 0.01em solid #555555;
+border-collapse: collapse;
+padding-bottom: 2em;
+padding-top: 0.5em;
+}
+.footer-font{
+  font-size: 0.9em;
+  color: white;
+}
+.footer-font>span{
+  color:rgb(150, 144, 144);
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+/* 하단 컨트롤바 */
+.nav-control{
+  font-size: 1.1em;
+  margin:3em 3em;
+  position:fixed;
+  bottom: 1%;
+  right: 1%;
+  
+}
+.nav-control>li{
+  list-style: none ;
+  float: left;
+}
+.nav-control>li>a{
+  color:rgb(205, 216, 224);
+  padding: 0.1em;
+}
+
+
+
+@media screen and (max-width: 570px){
+  
+  } 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- mybatis 환경 설정 -->
+<configuration>
+	<!-- properties 파일 설정 -->
+	<!-- <properties resource="db.properties"></properties> -->
+	<!-- alias설정 alias는 id라고 생각하면 되겠다. type=class -->
+<typeAliases>
+<!-- alias = "A" 는 mappper의 parameterType="A"로 사용하면됨 -->
+	<typeAlias alias="Emoticon" type="com.commuin.vo.Emoticon"></typeAlias>
+	
+	<typeAlias alias="EmoticonList"
+		type="com.commuin.vo.EmoticonList" />
+	
+	<typeAlias alias="UserEmoticon"
+		type="com.commuin.vo.UserEmoticon" />
+	
+	<typeAlias alias="Channel"
+		type="com.commuin.vo.Channel" />
+		
+	<typeAlias alias="Tag" type="com.commuin.vo.Tag" />
+	<typeAlias alias="Board" type="com.commuin.vo.Board" />
+	<typeAlias alias="Reply" type="com.commuin.vo.Reply" />
+	<typeAlias alias="Scrap" type="com.commuin.vo.Scrap" />
+	<typeAlias alias="Subscribe" type="com.commuin.vo.Subscribe" />
+	<typeAlias alias="Follow" type="com.commuin.vo.Follow" />
+	<typeAlias alias="User" type="com.commuin.vo.User" />
+	<typeAlias alias="Report" type="com.commuin.vo.Report" />
+	
+	
+</typeAliases>
+	
+
+
+	<!--sql mapper 설정 -->
+	<!-- <mappers>
+		<mapper resource="mappings/board-mapping.xml" />
+		<mapper resource="mappings/user-mapping.xml" />
+	</mappers> -->
+
+</configuration>

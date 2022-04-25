@@ -1,0 +1,255 @@
+html {
+	font-size: 10px;
+}
+
+body {
+	background-color: var(--color-bg-body);
+	color: var(--color-text-color);
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.shop-article a:hover {
+	text-decoration: none;
+	color: var(--color-bg-hover);
+}
+
+.shop-article div>a:hover {
+	text-decoration: none;
+	color: var(--color-bg-hover);
+}
+
+.shop-article>.container {
+	background-color: var(--color-bg-main);
+	border-left: 0.1em solid var(--color-border-color);
+	border-right: 0.1em solid var(--color-border-color);
+	border-bottom: 0.1em solid var(--color-border-color);
+	min-height: 960px;
+	margin-bottom:1.5rem;
+}
+
+.shop-article .top-box {
+	border-top: 1px solid var(--color-border-color);
+	margin-top: 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.temp-for-padding .container {
+	padding: 0;
+}
+
+.shop-article .bottom-box {
+	padding-top: 1rem;
+	padding-bottom: 10rem;
+	margin-top: 1rem;
+	border-top: 0.1rem solid var(--color-border-color);
+}
+
+.shop-article .top-box .btn-secondary {
+	background-color: var(--color-btn-bg-color);
+	color: var(--color-btn-text-color);
+	font-size: 1.5rem;
+	font-weight: bold;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.shop-article .top-box .btn-secondary:hover {
+	background-color: rgb(121, 164, 177);
+	transition: 0.4s;
+}
+
+.shop-article .bottom-box .btn-secondary {
+	background-color: var(--color-btn-bg-color);
+	font-size: 1.5em;
+	font-weight: bold;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	border-radius: 0%;
+}
+
+.shop-article .bottom-box .form-control {
+	background-color: var(--color-bg-body);
+	border: 0.1rem solid var(--color-border-color);
+	font-size: 1.5em;
+	border-radius: 0%;
+	color: var(--color-text-color);
+}
+
+.shop-article .bottom-box .form-inline {
+	margin: 0 0 1rem 0;
+}
+
+.shop-article .page-link {
+	border: 1px solid var(--color-border-color);
+	background-color: var(--color-bg-body);
+	color: var(--color-text-color);
+	font-size: 1.8rem;
+	width: 3.5rem;
+	height: 3.5rem;
+	text-align: center;
+}
+
+.shop-article .page-link:hover {
+	border: 1px solid var(--color-border-color);
+	color: white;
+	background-color: var(--color-border-color);
+}
+
+.middle-box {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.middle-box .item {
+	margin: 1rem;
+	width: 150px;
+}
+
+.middle-box .item .img {
+	width: 100px;
+	height: 100px;
+}
+
+.middle-box .item {
+	text-align: center;
+	padding: 0.8rem;
+	border: 1px solid var(--color-border-color);
+	border-radius: 15px;
+}
+
+.shop-article .middle-box img {
+	padding-bottom: 0.4rem;
+}
+
+.shop-article .middle-box .item-title {
+	color: var(--color-text-color);
+	font-size: 1.5rem;
+	text-overflow: ellipsis;
+}
+
+.shop-article .middle-box .item-count, .item .item-registrant {
+	color: var(--color-text-color);
+	font-size: 1.5rem;
+	text-overflow: ellipsis;
+}
+
+/* 
+shop content
+*/
+.shop-article .seleted-item-box {
+	margin: 0 auto;
+}
+
+.shop-article .seleted-item-title {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding: 5px;
+	background-color: var(--color-bg-body);
+	border-top: 1px solid var(--color-border-color);
+	border-bottom: 1px solid var(--color-border-color);
+	font-size: 1.5rem;
+}
+
+.shop-article .seleted-item-info {
+	padding: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	border-bottom: 1px solid var(--color-border-color);
+	font-size: 1.5rem;
+}
+
+.shop-article .seleted-item-list {
+	margin: 1em 0 1em 0;
+}
+
+.shop-article .seleted-item-list img {
+	width: 100px;
+	height: auto;
+}
+
+
+
+.shop-article .seleted-item-price {
+	background-color: var(--color-btn-bg-color);
+	color: white;
+	font-size: 1rem;
+	border: 1px solid var(--color-border-color);
+	padding: 0.5rem;
+	margin-top: 1rem;
+	font-size: 1.7em;
+}
+
+.shop-article .seleted-item-price:hover {
+	background-color: rgb(121, 164, 177);
+	transition: 0.4s;
+}
+
+/*
+미디어쿼리
+*/
+@media screen and (max-width: 768px) {
+	.shop-article .middle-box .item {
+		width: 22%;
+	}
+	.shop-article img, .shop-article video {
+		width: 80%;
+		height: auto;
+	}
+	
+}
+
+@media screen and (max-width: 570px) {
+	.shop-article .middle-box .item {
+		width: 28%;
+	}
+	.shop-article img, .shop-article video {
+		width: 90%;
+		height: auto;
+	}
+	.shop-article .middle-box .item-title {
+		font-size: 1.2rem;
+	}
+	.shop-article .middle-box .item-count, .shop-article .item .item-registrant
+		{
+		font-size: 1.2rem;
+	}
+	.shop-article .middle-box .item-title {
+		font-size: 1.2rem;
+	}
+}
+
+@media screen and (max-width: 375px) {
+	.shop-article .middle-box .item {
+		width: 42%;
+	}
+	.shop-article img, .shop-article video {
+		width: 90%;
+		height: auto;
+	}
+	.shop-article .middle-box .item-title {
+		font-size: 1.2rem;
+	}
+	.shop-article .middle-box .item-count, .shop-article .item .item-registrant
+		{
+		font-size: 1.2rem;
+	}
+	.shop-article .middle-box .item-title {
+		font-size: 1.2rem;
+	}
+}
+@media screen and (max-width: 425px){
+	.shop-article .seleted-item-list img {
+	width: 90px;
+	height: auto;
+}
+}
+@media screen and (max-width: 320px){
+	.shop-article .seleted-item-list img {
+	width: 30%;
+	height: auto;
+}
+}

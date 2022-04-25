@@ -1,0 +1,440 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  background-color: var(--color-bg-body);
+ 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.board-article .boardList-container {
+  padding: 1.5rem;
+  padding-top:3rem;
+  background-color: var(--color-bg-main);
+  border: 1px solid var(--color-border-color);
+  border-top: none;
+  color: var(--color-text-color);
+  font-size: 1.3rem;
+  min-height: 900px;
+  margin-bottom:1.5rem;
+}
+
+
+.board-article .boardList-container .page-link {
+  border: 1px solid var(--color-border-color);
+ background-color: var(--color-bg-body);
+	color: var(--color-text-color);
+  width: 3.5rem;
+  height: 3.5rem;
+  text-align: center;
+  font-size: 1.8rem;
+}
+.board-article .boardList-container .page-link:hover {
+  border: 1px solid var(--color-border-color);
+  color: white;
+  background-color: var(--color-border-color);
+}
+.board-article .boardList-container .head:hover,
+.board-article .boardList-container .head,
+.board-article .boardList-container .head .vrow-bottom,
+.board-article .boardList-container .head .vrow-top {
+  background-color: var(--color-bg-body);
+  font-weight: bold;
+}
+.board-article .board-header .flex-header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 0.8rem;
+}
+.board-article .board-header-title {
+  font-size: 1.5em;
+  margin-right: 0.8em;
+}
+.board-article .now-page{
+	
+	background-color: #222222;
+	color:green;
+	
+}
+.board-article .board-bullet {
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border-color);
+  border-bottom: 1px solid var(--color-border-color);
+}
+.board-article .board-bullet ul {
+  margin: 0.5rem 0;
+  padding: 0;
+}
+.board-bullet ul > li {
+  background-color: var(--color-bg-tag);
+  padding: 0.5rem;
+  margin: 0.5rem;
+  list-style: none;
+  float: left;
+  border: 1px solid var(--color-border-color);
+  border-collapse: collapse;
+}
+
+.board-list a,
+.board-bullet ul > li > a,
+.board-bullet ul > li > a:hover,
+.board-bullet ul > li > a:active {
+  text-decoration: none;
+  color: var(--color-text-color);
+}
+.board-bullet ul > li:hover{
+    transition: 0.3s;
+    background-color: rgb(150, 112, 151);
+    
+}
+
+.board-header .btn-outline-info {
+  border: 1px solid rgb(66, 104, 129);
+  color: var(--color-text-color);
+}
+
+.boardList-container .btn-secondary {
+  background-color: var(--color-bg-navbar);
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-btn-text-color);
+  border-radius: 0%;
+}
+.boardList-container .form-control {
+  background-color: var(--color-bg-form);
+  border: 1px solid var(--color-border-color);
+  font-size: 1.5rem;
+  border-radius: 0%;
+  color: var(--color-text-color);
+}
+.boardList-container .form-inline {
+  justify-content: right;
+}
+.board-sort {
+  margin: 0.5rem 0;
+}
+.board-list {
+  margin: 0 0 0.3rem 0;
+}
+.board-list .vrow,
+.board-list .vrow-top,
+.board-list .vrow-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+}
+
+.board-list .vrow:hover{
+  background-color: var(--color-bg-body);
+  transition: 0.5s;
+}
+
+.board-list .vrow {
+  padding: 0.8rem 0.5rem;
+  border-bottom: 1px solid var(--color-border-color);
+}
+.board-list .vrow-top {
+  width: calc(100% - 300px);
+  background-color: transparent;
+}
+.board-list .badge{
+	background-color: var(--color-bg-badge);
+	color:var(--color-text-badge-color);
+	font-size: 1.1rem;
+	padding: 0.5rem;
+	font-weight:lighter; 
+}
+.vcol-id {
+  width: calc(60px - 0.3rem);
+}
+.board-list .vrow-bottom {
+  width: 300px;
+  background-color: transparrent;
+}
+.vcol-author {
+  width: calc(120px - 0.3rem);
+}
+.vcol-time {
+  width: calc(80px - 0.3rem);
+}
+.vcol-view {
+  width: calc(60px - 0.3rem);
+}
+.vcol-rate {
+  width: calc(40px - 0.3rem);
+}
+.vcol-id,
+.vcol-rate,
+.vcol-time,
+.vcol-view {
+  justify-content: center;
+}
+.vcol-id,
+.vcol-rate,
+.vcol-time,
+.vcol-view,
+.vcol-author,
+.vcol-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 0.3rem;
+}
+.vrow-top {
+  width: 100%;
+}
+.notice-board {
+	background-color: var(- -color-bg-main);
+}
+/* 해당 게시판 */
+
+.board-article .getboard-title {
+  padding: 5px;
+  background-color: var(--color-bg-body);
+  border-top: 1px solid var(--color-border-color);
+  border-bottom: 1px solid var(--color-border-color);
+  font-size: 1.5rem;
+  display:flex;
+  justify-content: space-between;
+}
+.board-article .board-info {
+  align-items: center;
+  font-size: 1.3rem;
+}
+
+.board-article .board-info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+}
+.board-article .getboard-info {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+.board-article .board-content,
+.board-article .board-scrape {
+  border-top: 1px solid var(--color-border-color);
+  padding: 5px;
+}
+.member-info {
+  margin-bottom: 0.3rem;
+}
+.board-score,
+.board-date {
+  margin-bottom: 0.3rem;
+}
+
+.board-vote {
+  display: flex;
+  justify-content: center;
+}
+.board-vote .btn-secondary {
+  border-radius: 15px;
+  margin: 3rem 0 1rem 0;
+  padding: 1.5rem 0.5rem;
+}
+.board-vote span {
+  color: royalblue;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+.board-scrape {
+  display: flex;
+  justify-content: end;
+}
+.board-article .board-comment {
+  padding-top: 0.3rem;
+  border-top: 1px solid var(--color-border-color);
+}
+/* 모달  */
+.board-article button {
+  background: #000000;
+  color: #fff;
+  border: none;
+  position: relative;
+
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+}
+.board-article button:hover {
+  background: #fff;
+  color: black;
+}
+.board-article button:before,
+.board-article button:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: #000000;
+  transition: 400ms ease all;
+}
+.board-article button:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.board-article button:hover:before,
+.board-article button:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+.box-radio-input input[type="radio"]{
+  display:none;
+}
+
+.box-radio-input input[type="radio"] + span{
+  display:flex;
+  background:none;
+  border:1px solid #dfdfdf;  
+  padding:0px 10px;
+	justify-content:center;
+	align-items:center;
+  height:35px;
+ 
+  font-weight:500;
+  cursor:pointer;
+}
+
+.box-radio-input input[type="radio"]:checked + span{
+  border:1px solid #23a3a7;
+  background:#23a3a7;
+  color:#fff;
+}
+.modal-content{
+font-size : 1.5rem;
+}
+/* 모달  */
+
+
+.comment-title {
+  font-size: 2.5rem;
+
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--color-border-color);
+}
+.comment-list {
+  padding: 1rem 0;
+}
+.comment-list .comment {
+  margin: 1rem 0;
+  border: 1px solid var(--color-border-color);
+}
+.comment-list .user-info {
+  background-color: var(--color-bg-body);
+  color: var(--color-text-color);
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--color-border-color);
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-info .user-date {
+  margin-left: auto;
+}
+.comment-list .user-message {
+  padding: 0.5rem;
+}
+.comment-list .reply,
+.comment-list .reply:hover {
+  color: var(--color-text-color);
+}
+.comment-list .reply::before {
+  content: "";
+}
+
+.board-article .b-sep::before {
+  content: "|";
+}
+.modal-body textarea{
+	font-size:1.5rem;
+	height: 50px;
+	
+}
+@media screen and (max-width: 360px) {
+  .board-article .board-date {
+    width: 100%;
+  }
+  .board-article .board-date .b-sep::before {
+    content: "";
+  }
+  .board-article .board-sort .btn {
+    font-size: 1.2rem;
+  }
+}
+/* 최종 */
+
+
+
+
+
+
+
+@media screen and (max-width: 425px) {
+
+ .board-article .comment-list .user-info{
+  display: block;
+  }
+.board-article .user-date{
+  margin: 0;
+  }
+  
+ 
+}
+
+@media screen and (max-width: 767px) {
+  .board-article .board-info {
+    justify-content: left;
+  }
+
+  .vrow {
+    font-size: 1.1rem;
+  }
+  .board-list .vrow-top {
+    width: 100%;
+    
+  }
+  .board-list .vrow-bottom {
+    width: 100%;
+    
+  }
+  .vcol-id {
+    display: none;
+  }
+  .vcol-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .vcol-author {
+    width: auto;
+  }
+  .vcol-time {
+    width: auto;
+  }
+  .vcol-view {
+    width: auto;
+  }
+  .vcol-view::before {
+    content: "| 조회";
+    margin-right: 0.3rem;
+  }
+  .vcol-rate {
+    width: auto;
+  }
+  .vcol-rate::before {
+    content: "| 추천";
+    margin-right: 0.3rem;
+  }
+
+  .vcol-author {
+    margin-right: auto;
+  }
+}

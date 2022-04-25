@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+[ insertTagTrigger : 채널 생성시 바로 생김 ]
+[ selectCheckTag : 해당 태그가 있는지 검사 있으면1 없으면0 ]
+[ insertTag : 태그를 새로 추가함 ]
+[ selectTagList : ch_id와 일치하는 태그리스트를 가져옴 ]
+-->
+
+<mapper namespace="subscribe" >
+
+	<resultMap type="Subscribe" id="subscribeResult">
+	<id property="s_id" column="s_id"></id>
+	<result property="u_name" column="u_name" />
+	<result property="ch_id" column="ch_id" />
+	</resultMap>
+<!-- 구독 확인을 하고  -->
+	<select id="selectSubscribeCheck" parameterType="Subscribe" resultType="int">
+	<![CDATA[
+	 select count(*) from subscribe where ch_id=#{ch_id} and u_name=#{u_name}
+	]]>
+	</select>
+	
+	<!-- 있다면? 취소 없다면? 구독  -->
+	<insert id="insertSubscribe">
+		insert into subscribe(ch_id,u_name) values(#{ch_id},#{u_name})
+	</insert>
+	<delete id="deleteSubscribe">
+	delete from subscribe where ch_id=#{ch_id} and u_name=#{u_name}
+	</delete>
+	<!-- 해당채널의 구독자수도 증가or감소 -->
+	<update id="updateCountUp">
+	update channel set ch_subscribe=ch_subscribe+1 where ch_id=#{ch_id}
+	</update>
+	<update id="updateCountDown">
+	update channel set ch_subscribe=ch_subscribe-1 where ch_id=#{ch_id}
+	</update>
+	
+	
+</mapper>

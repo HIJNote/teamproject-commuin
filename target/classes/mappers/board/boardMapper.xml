@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BoardDao">
+	<resultMap type="Board" id="boardResult">
+		<id property="b_id" column="b_id"></id>
+		<result property="ch_name" column="ch_name" />
+		<result property="ch_id" column="ch_id" />
+		<result property="b_title" column="b_title" />
+		<result property="u_name" column="u_name" />
+		<result property="b_regdate" column="b_regdate" />
+		<result property="b_blinddate" column="b_blinddate" />
+		<result property="b_warning" column="b_warning" />
+		<result property="b_delete" column="b_delete" />
+		<result property="b_view" column="b_view" />
+		<result property="b_follow" column="b_follow" />
+		<result property="b_reply_count" column="b_reply_count" />
+		<result property="b_content" column="b_content" />
+		<result property="b_tag" column="b_tag" />
+	</resultMap>
+
+
+	<resultMap type="Channel" id="channelResult">
+		<id property="ch_id" column="ch_id"></id>
+		<result property="ch_name" column="ch_name" />
+		<result property="u_name" column="u_name" />
+		<result property="ch_grade" column="ch_grade" />
+		<result property="ch_subscribe" column="ch_subscribe" />
+		<result property="ch_intro" column="ch_intro" />
+	</resultMap>
+
+	<!-- 게시글 삽입 -->
+	<insert id="boardInsert">
+		INSERT INTO board(ch_name,ch_id, b_title, u_name,
+		b_content, b_tag)
+		VALUES(#{ch_name},#{ch_id},#{b_title}, #{u_name},
+		#{b_content}, #{b_tag})
+	</insert>
+	<!-- 유저이름과 게시물 제목이 같은..? -->
+	<select id="boardSelect" resultType="com.commuin.vo.Board">
+		select *
+		from board
+		where
+		u_name = #{u_name} and b_title = #{b_title} and
+		b_regdate = (select
+		max(b_regdate)
+		FROM board
+		where u_name = #{u_name} and b_title
+		=#{b_title})  and b_delete = 0
+	</select>
+	<!-- 페이징처리+검색까지 처리하려면 이렇게 -->
+	<select id="selectBoardList" parameterType="Board"
+		resultMap="boardResult">	
+	<![CDATA[
+	select * from board where 1=1  and b_delete = 0
+	]]>
+		<!-- 베스트글의 경우조회수 20초과, 나중에는 추천수로 할거. -->
+		<choose>
+			<when test="ch_id==1">
+				and b_view>20 and ch_id in (select ch_id from channel where ch_grade!=4)
+			</when>
+			<!-- 아닌경우 -->
+			<otherwise>
+				and ch_id=#{ch_id}
+				<if test="b_tag != null">
+					and b_tag=#{b_tag}
+				</if>
+			</otherwise>
+		</choose>
+
+		<choose>
+			<when test="searchCondition=='title'">
+				and b_title like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='writer'">
+				and u_name like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='content'">
+				and b_content like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='title_content'">
+				and b_content like CONCAT('%',#{searchKeyword},'%')
+				or
+				b_title like
+				CONCAT('%',#{searchKeyword},'%')
+			</when>
+		</choose>
+	<![CDATA[
+	ORDER BY
+	]]>
+		<choose>
+			<when test="target=='follow'">
+				b_follow desc,
+			</when>
+			<when test="target=='view'">
+				b_view desc,
+			</when>
+			<when test="target=='comment'">
+				b_reply_count desc,
+			</when>
+		</choose>
+	<![CDATA[
+	b_id desc LIMIT #{pageMaker.pageStart}, #{pageMaker.perPageNum}
+	]]>
+	</select>
+
+	<!-- 페이징할 게시글의 숫자 조건까지 명시되어 계산된 숫자를 리턴해야함 -->
+	<select id="selectBoardCount" parameterType="Board"
+		resultType="int">
+	<![CDATA[
+	select count(*) from board where 1=1 and b_delete = 0
+	]]>
+		<!-- 베스트글의 경우조회수 20초과, 나중에는 추천수로 할거. -->
+		<choose>
+			<when test="ch_id==1">
+				and b_view>20 and ch_id in (select ch_id from channel where ch_grade!=4)
+			</when>
+			<!-- 아닌경우 -->
+			<otherwise>
+				and ch_id=#{ch_id}
+				<if test="b_tag != null">
+					and b_tag=#{b_tag}
+				</if>
+			</otherwise>
+		</choose>
+		
+		<choose>
+			<when test="searchCondition=='title'">
+				and b_title like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='writer'">
+				and u_name like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='content'">
+				and b_content like CONCAT('%',#{searchKeyword},'%')
+			</when>
+			<when test="searchCondition=='title_content'">
+				and b_content like CONCAT('%',#{searchKeyword},'%')
+				or
+				b_title like
+				CONCAT('%',#{searchKeyword},'%')
+			</when>
+		</choose>
+
+	</select>
+	<!-- 각채널별 공지글 -->
+	<select id="selectNoticeBoardList" parameterType="Board" resultMap="boardResult">
+	select * from board where ch_id=#{ch_id} and b_tag='공지' and b_delete = 0 limit 3
+	</select>
+	
+	<!-- 베스트게시글을 눌렀을경우 목록을 보여줌, 현재 조회수20// 원래는 추천수X개로 설정 -->
+
+	<select id="selectBestList" parameterType="Board"
+		resultType="com.commuin.vo.Board">
+	<![CDATA[
+	select * from board where b_view>20 and b_delete = 0 and ch_id != (select ch_id from channel where ch_grade=4);
+	]]>
+		<if test="searchCondition=='title'">
+			and b_title like CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<if test="searchCondition=='writer'">
+			and u_name like CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<if test="searchCondition=='content'">
+			and b_content like CONCAT('%',#{searchKeyword},'%')
+		</if>
+		<if test="searchCondition=='title_content'">
+			and b_content like CONCAT('%',#{searchKeyword},'%') or
+			b_title like
+			CONCAT('%',#{searchKeyword},'%')
+		</if>
+		ORDER BY b_id DESC
+
+		LIMIT #{pageMaker.pageStart}, 10
+	</select>
+
+
+
+	<!-- 게시글 아이디에 대한 게시글 정보들을 가져옴 -->
+	<select id="selectBoard" parameterType="Board"
+		resultMap="boardResult">
+		select * from board where b_id=#{b_id} and b_delete = 0
+	</select>
+
+	<!-- 게시글 아이디에 대한 글이 조회되면 해당 게시글의 조회수를 1 증가시킨다 -->
+	<update id="updateBoardView" parameterType="Board">
+		update board set
+		b_view=b_view+1 where b_id=#{b_id}
+	</update>
+	<select id="reply" resultType="int">
+		select count(*) from reply where
+		b_id = #{b_id}
+	</select>
+
+	<select id="replyList" resultType="com.commuin.vo.Reply">
+		select * from reply where b_id = #{b_id} and rp_delete = 0 order by rp_id asc
+	</select>
+	<!-- 게시글 삭제 -->
+	<update id="boardDelete" parameterType="String">
+		update board set b_delete = 1 where b_id = #{b_id}
+	</update>
+	
+	<select id="checkPoint" resultType="int">
+		select u_pt from user where u_id = #{u_id}
+	</select>
+	
+	<!-- 게시글 수정 -->
+	<select id="updateBoardSelect" resultType="com.commuin.vo.Board">
+		select * from board where b_id = #{b_id}
+	</select>
+	
+	<update id="boardUpdate" parameterType="com.commuin.vo.Board">
+		update board set b_title = #{b_title}, b_content = #{b_content}, b_tag = #{b_tag}, b_regdate = now() where b_id = #{b_id}
+	</update>
+</mapper>

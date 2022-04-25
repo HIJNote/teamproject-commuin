@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- [ selectBoardList : 내가 쓴 게시글] [ selectReplyList : 내가 쓴 댓글] [ selectScrapList 
+	: 내가 스크랩한 게시글id 조인을 통해 게시글의 제목을 찾아야함] [ selectEmoticon : 내가 구매한 이모티콘id 조인을 
+	통해 e_path 찾아야함 ] -->
+
+<!-- property : 변수명 ex) Board board에서 property는 board id : mybatis에서 고유한 
+	아이디 type : 반환 타입 조인문에서 Collection은 1:N association은 1:1에서 사용하는듯? parameterType은 
+	~~~.BoardVO처럼 완전히 다 써야하지만 mybatis config를 따로 설정해서 alias를 가져올 수 있음, 이때 alias는 
+	변수명, type은 타입? 정도로 생각하자 Board board 에서 Board가 type, board가 alias -->
+
+<mapper namespace="mypage">
+
+	<resultMap type="Board" id="boardResult">
+		<id property="b_id" column="b_id"></id>
+		<result property="ch_id" column="ch_id" />
+		<result property="ch_name" column="ch_name" />
+		<result property="b_title" column="b_title" />
+		<result property="u_name" column="u_name" />
+		<result property="b_regdate" column="b_regdate" />
+	</resultMap>
+
+	<resultMap type="Reply" id="replyResult">
+		<id property="rp_id" column="rp_id"></id>
+		<result property="b_id" column="b_id" />
+		<result property="u_name" column="u_name" />
+		<result property="rp_content" column="rp_content" />
+		<result property="rp_regdate" column="rp_regdate" />
+		<result property="rp_hierarchy" column="rp_hierarchy" />
+		<result property="rp_order" column="rp_order" />
+		<result property="rp_group" column="rp_group" />
+		<result property="rp_delete" column="rp_delete" />
+		<result property="rp_type" column="rp_type" />
+		<collection property="board" resultMap="boardResult"></collection>
+	</resultMap>
+
+	<resultMap type="Scrap" id="scrapResult">
+		<id property="sc_id" column="sc_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="b_id" column="b_id" />
+		<result property="sc_date" column="sc_date" />
+		<collection property="board" resultMap="boardResult"></collection>
+	</resultMap>
+
+	<resultMap type="UserEmoticon" id="userEmoticonResult">
+		<id property="ue_id" column="ue_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="e_id" column="e_id" />
+		<collection property="emoticon" resultMap="emoticonResult"></collection>
+	</resultMap>
+
+	<resultMap type="Emoticon" id="emoticonResult">
+		<id property="e_id" column="e_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="e_title" column="e_title" />
+		<result property="e_thumbnail" column="e_thumbnail" />
+		<result property="e_path" column="e_path" />
+		<result property="e_count" column="e_count" />
+		<result property="e_price" column="e_price" />
+		<result property="e_regdate" column="e_regdate" />
+	</resultMap>
+
+
+
+	<select id="selectMypageBoardList" parameterType="Board"
+		resultMap="boardResult">
+	<![CDATA[
+	select b.b_id,b.ch_name,b.ch_id,b.b_title,b.u_name,b.b_regdate,c.ch_grade 
+	from board b join channel c 
+	on b.ch_id=c.ch_id 
+	where b.u_name=#{u_name} and b.b_delete=0 and c.ch_grade!=4
+	order by b.b_id desc 
+	]]>
+	</select>
+
+	<select id="selectMypageReplyList" parameterType="Reply"
+		resultMap="replyResult">
+	<![CDATA[
+	select r.rp_id,r.b_id,b.ch_name,b.ch_id,r.rp_regdate,r.rp_content,r.rp_type from 
+	reply r join board b on r.b_id=b.b_id join channel c on b.ch_id=c.ch_id 
+	where r.u_name=#{u_name} and b.b_delete=0 and c.ch_grade !=4 and r.rp_delete=0
+	 order by r.rp_id desc 
+	]]>
+	</select>
+	<select id="selectMypageScrapList" parameterType="Scrap"
+		resultMap="scrapResult">
+	<![CDATA[
+	 select s.sc_id,s.b_id,b.ch_id,s.sc_date,b.ch_name,b.b_title from 
+	 scrap s join board b on s.b_id=b.b_id join channel c on b.ch_id=c.ch_id 
+	 where s.u_name=#{u_name} and b.b_delete=0 and c.ch_grade!=4 
+	 order by s.sc_id desc  
+	]]>
+	</select>
+
+	<!-- <select id="test" parameterType="Scrap" resultMap="scrapResult"> <![CDATA[ 
+		select s.b_id, b.ch_id , b.b_title from scrap s join board b on s.b_id=b.b_id 
+		where s.u_name=#{u_name} ]]> </select> -->
+
+	<select id="selectMypageEmoticonList"
+		parameterType="UserEmoticon" resultMap="userEmoticonResult">
+	<![CDATA[
+	select ue.e_id, e.e_path from user_emoticon ue join emoticon e on ue.e_id=e.e_id where ue.u_name=#{u_name} and e.e_delete=0
+	order by  ue.e_id desc 
+	]]>
+	</select>
+
+	<!-- 보유수 : 게시글, 댓글, 스크랩, 이모티콘 -->
+	<select id="selectBoardCount" parameterType="Board"
+		resultType="int">
+		<![CDATA[
+		select count(*) from board b join channel c on b.ch_id=c.ch_id where b.u_name=#{u_name} and b.b_delete=0 and c.ch_grade!=4
+	order by b.b_id desc 
+		]]>
+	</select>
+	<select id="selectReplyCount" parameterType="Reply"
+		resultType="int">
+		<![CDATA[
+	select count(*) from reply r join board b on r.b_id=b.b_id join channel c on b.ch_id=c.ch_id
+	 where r.u_name=#{u_name} and b.b_delete=0 and c.ch_grade !=4 and r.rp_delete=0
+	 order by r.rp_id desc 
+	]]>
+	</select>
+	<select id="selectScrapCount" parameterType="Scrap"
+		resultType="int">
+		<![CDATA[
+	 select count(*) from 
+	 scrap s join board b on s.b_id=b.b_id join channel c on b.ch_id=c.ch_id 
+	 where s.u_name=#{u_name} and b.b_delete=0 and c.ch_grade!=4 
+	 order by s.sc_id desc  
+	]]>
+	</select>
+	<select id="selectEmoticonCount" parameterType="UserEmoticon"
+		resultType="int">
+		select count(*) from user_emoticon ue join emoticon e on ue.e_id=e.e_id where ue.u_name=#{u_name} and e.e_delete=0
+	order by  ue.e_id desc 
+	</select>
+
+</mapper>

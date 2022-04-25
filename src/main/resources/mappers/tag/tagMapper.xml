@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+[ insertTagTrigger : 채널 생성시 바로 생김 ]
+[ selectCheckTag : 해당 태그가 있는지 검사 있으면1 없으면0 ]
+[ insertTag : 태그를 새로 추가함 ]
+[ selectTagList : ch_id와 일치하는 태그리스트를 가져옴 ]
+-->
+
+<mapper namespace="TagDao" >
+
+	<resultMap type="Tag" id="tagResult">
+	<id property="tg_id" column="tg_id"></id>
+	<result property="tg_name" column="tg_name" />
+	<result property="ch_id" column="ch_id" />
+	</resultMap>
+	
+	<resultMap type="Board" id="boardResult">
+		<id property="b_id" column="b_id"></id>
+		<result property="ch_name" column="ch_name" />
+		<result property="ch_id" column="ch_id" />
+		<result property="b_title" column="b_title" />
+		<result property="u_name" column="u_name" />
+		<result property="b_regdate" column="b_regdate" />
+		<result property="b_blinddate" column="b_blinddate" />
+		<result property="b_warning" column="b_warning" />
+		<result property="b_delete" column="b_delete" />
+		<result property="b_view" column="b_view" />
+		<result property="b_follow" column="b_follow" />
+		<result property="b_reply_count" column="b_reply_count" />
+		<result property="b_content" column="b_content" />
+		<result property="b_tag" column="b_tag" />
+	</resultMap>
+	
+	
+
+	<insert id="insertTagTrigger" parameterType="Tag">
+	<![CDATA[
+	 insert into tag(tg_name,ch_id) values(#{tg_name},#{ch_id})
+	]]>
+	</insert>
+	<!-- 해당 태그이름과 채널이름을 가지고 있는 태그 있는가? -->
+	<select id="selectCheckTag" parameterType="Tag" resultType="int">
+	<![CDATA[
+	 select count(*) from tag where tg_name=#{tg_name} and ch_id=#{ch_id}
+	]]>
+	</select>
+	<!-- 태그 삽입 -->
+	<insert id="insertTag" parameterType="Tag">
+	<![CDATA[
+	insert into tag(tg_name,ch_id) values(#{tg_name},#{ch_id})
+	]]>
+	</insert>
+	<!-- 채널아이디에 대한 태그들을 가져옴 -->
+	<select id="selectTagList" parameterType="Tag" resultMap="tagResult">
+	<![CDATA[
+	 select * from tag where ch_id=#{ch_id}
+	]]>
+	</select>
+	<!-- 게시글 태그의 이름을 전체로 업데이트 후 제거 -->
+	<update id="updateTagBefore" parameterType="Tag">
+	update board set b_tag='전체' where ch_id=#{ch_id} and b_tag=#{tg_name}
+	</update>
+	
+	<delete id="deleteTag" parameterType="Tag">
+	delete from tag where tg_name=#{tg_name} and ch_id=#{ch_id}
+	</delete>
+	
+	<!-- 바꿀 태그의 이름을 검사하고 없다면 해당채널의 아이디와 태그이름을 가지고있는 게시글들의 태그이름을 바꾸고 업데이트한다-->
+	<select id="selectTagBefore" parameterType="Tag" resultType="int">
+	<![CDATA[
+	 select count(*) from tag where tg_name=#{tg_change} and ch_id=#{ch_id}
+	]]>
+	</select>
+	
+	<update id="updateBoardTag" parameterType="Tag">
+	update board set b_tag=#{tg_change} where ch_id=#{ch_id} and b_tag=#{tg_name}
+	</update>
+	
+	<update id="updateTag" parameterType="Tag">
+	update tag set tg_name=#{tg_change} where tg_name=#{tg_name} and ch_id=#{ch_id}
+	</update>
+	
+</mapper>

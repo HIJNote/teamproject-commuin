@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="scrap">
+	<resultMap type="Scrap" id="scrapResult">
+	<id property="sc_id" column="sc_id"></id>	
+	<result property="u_name" column="u_name" />
+	<result property="b_id" column="b_id" />
+	<result property="sc_date" column="sc_date" />
+	</resultMap>
+
+	
+	<select id="selectScrapCheck" parameterType="Scrap" resultType="int">
+	<![CDATA[
+	 select count(*) from scrap where b_id=#{b_id} and u_name=#{u_name}
+	]]>
+	</select>
+	
+	<!-- 있다면? 취소 없다면? 스크랩  -->
+	<insert id="insertScrap">
+		insert into scrap(b_id,u_name) values(#{b_id},#{u_name})
+	</insert>
+	<delete id="deleteScrap">
+	delete from scrap where b_id=#{b_id} and u_name=#{u_name}
+	</delete>
+
+
+
+
+
+</mapper>

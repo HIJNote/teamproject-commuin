@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ChannelDao" >
+
+	<resultMap type="Channel" id="channelResult">
+	<id property="ch_id" column="ch_id"></id>
+	<result property="ch_name" column="ch_name" />
+	<result property="u_name" column="u_name" />
+	<result property="ch_grade" column="ch_grade" />
+	<result property="ch_subscribe" column="ch_subscribe" />
+	<result property="ch_intro" column="ch_intro" />	
+	<result property="ch_category" column="ch_category" />
+	</resultMap>
+	
+	<resultMap type="Subscribe" id="subscribeResult">
+	<id property="s_id" column="s_id"></id>
+	<result property="u_name" column="u_name" />
+	<result property="ch_id" column="ch_id" />
+	</resultMap>
+
+	<!-- 채널이름중복검사 -->
+	<select id="checkName" parameterType="Channel" resultType="int">
+	<![CDATA[
+	 select count(*) from channel where ch_name=#{ch_name}
+	]]>
+	</select>
+	
+	<insert id="insertChannel" parameterType="Channel">
+	<![CDATA[
+	 insert into channel(ch_name,u_name,ch_category) values(#{ch_name},#{u_name},#{ch_category})
+	]]>
+	</insert>
+	<!-- 채널검색 -->
+	<select id="selectChannelList" parameterType="Channel" resultMap="channelResult">
+	<![CDATA[
+	select * from channel WHERE ch_grade<4 and (ch_name like CONCAT('%',#{search},'%') or u_name like CONCAT('%',#{search},'%'))
+	 order by ch_grade desc ;
+	]]>
+	</select>
+
+	<!-- 채널 아이디/채널 이름/ 등록자이름/구독자수/내가 구독한 채널-> 0이면 X 아니면 한거
+		나중에 구독여부 꺼낼때 if문써서 0 -> 구독 아니면 구독중으로 뽑아야할듯
+	 -->
+	
+	
+	
+	<!-- 유저이름에 해당하는 채널의 목록들을 가져온다  -->
+	<!-- <select id="selectMyChannel" parameterType="Channel" resultMap="channelResult">
+	<![CDATA[
+	select * from channel where u_name = #{u_name} and ch_id in (select ch_id from channel where ch_grade != 4)
+	]]>
+	</select> -->
+	<!-- 채널이름에 해당하는 채널 아이디를 가져온다  -->
+	<select id="selectChannelId" parameterType="Channel" resultType="int">
+	select ch_id from channel where ch_name=#{ch_name}
+	</select>
+		<!-- 유저이름에 해당하는 채널목록가져옴 -->
+	<select id="selectMyChannelList" parameterType="Channel" resultMap="channelResult">
+	select * from channel where u_name=#{u_name} and ch_id in (select ch_id from channel where ch_grade != 4)
+	</select>
+	<!-- 채널 아이디에 대한 정보를 가져온다 -->
+	<select id="selectChannel" parameterType="Channel" resultMap="channelResult">
+	select * from channel where ch_id=#{ch_id}
+	</select>
+	<!-- 채널 소개 업데이트-->
+	<update id="updateIntro" parameterType="Channel">
+	update channel set ch_intro=#{ch_intro} where ch_id=#{ch_id};
+	</update>
+
+
+</mapper>

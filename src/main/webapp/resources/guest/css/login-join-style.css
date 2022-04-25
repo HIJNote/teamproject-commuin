@@ -1,0 +1,136 @@
+html {
+	font-size:10px;
+}
+
+body {
+    background-color:var(--color-bg-body);
+}
+
+.note-dropdown-menu>.dropdown-item, .note-btn {
+	font-size:16px !important
+}
+.write-box .container{
+	background-color:var(--color-bg-main);
+	border:solid 1px var(--color-border-color);
+	min-height:900px;
+	margin-bottom:1.5rem;
+	
+}
+.login-article .form-control{
+	font-size:1.5rem;
+}
+.login-article .container{
+	min-height:900px;
+	margin-bottom:1.5rem;
+	background-color:var(--color-bg-main);
+	border:solid 1px var(--color-border-color);
+
+}
+
+.join-article .container{
+	background-color:var(--color-bg-main);
+	border:solid 1px var(--color-border-color);
+	margin-bottom:1.5rem;
+	min-height:900px;
+}
+.join-article .form-control{
+	font-size:1.5rem;
+}
+
+.login-article .custom-form, .join-article .custom-form, .accountSearch-article .custom-form {
+    border:solid 1px var(--color-border-color);
+}
+
+.accountSearch-article .container{
+	background-color:var(--color-bg-main);
+	border:solid 1px var(--color-border-color);
+	
+	min-height:900px;
+}
+
+.custom-a, .custom-a:hover {
+    text-decoration: none;
+    color:black;
+}
+
+.custom-search {
+    height:350px;
+}
+
+.board-create input[type=radio]:hover + label {
+    padding: 5px;
+    color:black;
+    border:solid 1px #00A495;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.board-create input[type=radio] {
+    display:none;
+}
+
+.board-create input[type=radio]:checked + label {
+    padding: 5px;
+    border:solid 1px #00A495;
+    border-radius: 25px;
+    background-color: #00A495;
+    color:white;
+}
+
+.board-create .form-control-lg {
+	font-size:2.0rem;
+}
+
+.board-create span {
+	font-size:1.4rem;
+}
+
+.write-box .input-group-text, .write-box input[type="text"] {
+	font-size:1.6rem;
+}
+
+@media (min-width: 0px) {
+    .login-article, .join-article, .accountSearch-article {
+        font-size:1.1rem;
+    }
+	.login-article input[type="text"], .join-article input[type="text"], .accountSearch-article input[type="text"],
+    .login-article input[type="password"], .join-article input[type="password"], .accountSearch-article input[type="password"],
+    .custom-btn {
+        font-size:1.1rem;
+    }
+    .custom-span {
+        font-size:1.4rem;
+    }
+}
+
+@media (min-width: 300px) {
+    .login-article, .join-article, .accountSearch-article {
+        font-size:1.4rem;
+    }
+    .login-article input[type="text"], .join-article input[type="text"], .accountSearch-article input[type="text"],
+    .login-article input[type="password"], .join-article input[type="password"], .accountSearch-article input[type="password"], 
+    .custom-btn {
+        font-size:1.4rem;
+    }
+    .custom-span {
+        font-size:1.7rem;
+    }
+}
+
+@media (min-width: 576px) { 
+    .login-article, .join-article, .accountSearch-article {
+        font-size:1.6rem;
+    }
+    .login-article input[type="text"], .join-article input[type="text"], .accountSearch-article input[type="text"],
+    .login-article input[type="password"], .join-article input[type="password"], .accountSearch-article input[type="password"],
+    .custom-btn {
+        font-size:2.0rem;
+    }
+    .custom-span {
+        font-size:2.8rem;
+    }
+}
+
+@media (min-width: 768px) { 
+    
+}

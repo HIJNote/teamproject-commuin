@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="guest">
+	<resultMap type="User" id="User">
+		<id property="u_id" column="u_id"></id>
+		<result property="u_name" column="u_name" />
+		<result property="u_pt" column="u_pt" />
+		<result property="u_lv" column="u_lv" />
+		<result property="u_lastdate" column="u_lastdate" />
+		<result property="u_email" column="u_email" />
+		<result property="u_joindate" column="u_joindate" />
+	</resultMap>
+	<!-- 테스트 -->
+	<select id="select" resultType="int">
+		select count(*) from user
+	</select>
+
+	<select id="idCheck" parameterType="String" resultType="int">
+		SELECT COUNT(u_id) FROM user WHERE u_id = #{id}
+	</select>
+
+	<select id="nameCheck" parameterType="String" resultType="int">
+		SELECT COUNT(u_name) FROM user WHERE u_name = #{name}
+	</select>
+
+	<select id="emailCheck" parameterType="String" resultType="int">
+		SELECT COUNT(u_email) FROM user WHERE u_email = #{email}
+	</select>
+
+	<insert id="join">
+		INSERT INTO user(u_id, u_pw, u_name, u_email)
+		VALUES(#{u_id}, #{u_pw}, #{u_name}, #{u_email})
+	</insert>
+
+	<select id="joinTest" resultType="int">
+		SELECT COUNT(*) FROM user WHERE
+		u_id = #{u_id} AND u_pw = #{u_pw}
+	</select>
+
+	<select id="loginCheck" resultType="com.commuin.vo.User">
+		SELECT * FROM user WHERE u_id
+		= #{u_id} AND u_pw = #{u_pw}
+	</select>
+
+	
+	<select id="subscribeInfo" resultType="com.commuin.vo.Channel">
+		SELECT C.ch_name, C.ch_id
+		FROM channel C
+		LEFT OUTER JOIN subscribe S
+		ON C.ch_id = S.ch_id
+		WHERE S.u_name = #{userName} and C.ch_grade!=4
+		ORDER BY C.ch_name
+	</select>
+	<select id="searchId" resultType="String">
+		SELECT u_id FROM user WHERE u_email = #{u_email}
+	</select>
+	<select id="searchPwd" resultType="String">
+		SELECT u_pw FROM user WHERE u_id = #{u_id}
+	</select>
+	<!-- 유저의 마지막 접속날짜 업데이트 -->
+	<update id="updateLastdate" parameterType="User">
+	update user set u_lastdate=now() where u_id=#{u_id}
+	</update>
+	<!-- 유저의 마지막 접속날짜 가져옴 -->
+	<select id="selectLastdate" parameterType="User" resultMap="User">
+	select * from user where u_id=#{u_id}
+	</select>
+	<!-- 유저의 포인트 증가 -->
+	<update id="updatePoint" parameterType="User">
+	update user set u_pt=u_pt+300 where u_id=#{u_id}
+	</update>
+	<!-- 채널생성시 유저의 포인트 3000감소 -->
+	<update id="updatePointDownChannel" parameterType="User">
+	update user set u_pt=u_pt-3000 where u_name=#{u_name}
+	</update>
+	<!-- 이모티콘 구매후 포인트 100 감소 -->
+	<update id="updatePointDownEmoticon" parameterType="User">
+	update user set u_pt=u_pt-100 where u_name=#{u_name}
+	</update>
+	
+	
+</mapper>
