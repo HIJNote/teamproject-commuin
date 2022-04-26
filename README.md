@@ -18,9 +18,21 @@
 
 *Index*
 
+<img src="./img/메인.png" style="width:450px;height:200px;"></img>
+<img src="./img/로그인+화면.png" style="width:450px;height:200px;"></img>
+<img src="./img/구독+로그인후.png" style="width:200px;height:300px;"></img>
+
+###### Index, 로그인
+
 ---
 
 *Emoticon*
+
+<img src="./img/콘1.png" style="width:500px;height:200px;"></img>
+<img src="./img/콘2.png" style="width:500px;height:200px;"></img>
+###### 이모티콘 구매·검색
+<img src="./img/콘3.png" style="width:500px;height:200px;"></img>
+###### 이모티콘 등록
 
 ---
 
@@ -51,7 +63,7 @@
 <img src="./img/신고.png" style="width:500px;height:200px;"></img>
 ###### 부적절한 게시글 신고 -> 관리자 페이지에서 관리 가능
 <img src="./img/반응.png" style="width:300px;height:400px;"></img>
-###### 부적절한 게시글 신고 -> 관리자 페이지에서 관리 가능
+###### 스마트폰
 <img src="./img/반응2.png" style="width:300px;height:400px;"></img>
-###### 부적절한 게시글 신고 -> 관리자 페이지에서 관리 가능
+###### 스마트폰
 
